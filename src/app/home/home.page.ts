@@ -8,6 +8,8 @@ import { PhotoService } from '../services/photo.service';
 })
 export class HomePage {
 
+  galleryType = 'regular';
+
   constructor(private photoService: PhotoService) {}
 
   ionViewWillEnter() {

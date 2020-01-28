@@ -12,6 +12,7 @@ import { File } from '@ionic-native/file/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
+import { Crop } from '@ionic-native/crop/ngx';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { Camera } from '@ionic-native/camera/ngx';
     File,
     WebView,
     FilePath,
-    Camera
+    Camera,
+    Crop
   ]
 })
 export class HomePageModule { }

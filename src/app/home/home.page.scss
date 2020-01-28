@@ -3,4 +3,42 @@
         font-size: 22px;
         margin-right: 10px;
     }
+
+    ion-toolbar {
+        margin-bottom: 10px;
+    }
+
+    ion-thumbnail {
+        --size: 150px;
+        border: 1px solid darkgray;
+        padding: 2px;
+        border-radius: 10px !important;
+    }
+
+    @media (min-width: 0px) {
+        .images {
+            column-count: 2;
+        }
+    }
+ 
+    @media (min-width: 420px) {
+        .images {
+            column-count: 3;
+        }
+    }
+ 
+    @media (min-width: 720px) {
+        .images {
+            column-count: 4;
+        }
+    }
+ 
+    .one-image {
+        margin: 10px; 
+    }
+
+    ion-img {
+        border-radius: 10px !important;
+        overflow: hidden;
+    }
 }
