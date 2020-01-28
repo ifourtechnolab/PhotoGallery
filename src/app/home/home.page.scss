@@ -41,4 +41,20 @@
         border-radius: 10px !important;
         overflow: hidden;
     }
+
+    .overlay-image {
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+    .photo-thumbnail {
+        position: relative;
+        display: inline-block;
+    }
+
+    .photo-thumbnail ion-icon {
+        position: absolute;
+        top: calc(50% - 10px);
+        left: calc(50% - 11px);
+    }
 }

@@ -12,6 +12,7 @@ import { Crop } from '@ionic-native/crop/ngx';
 export class PhotoService {
 
   public arrPhotos: Photo[] = [];
+  arrSelected: Photo[] = [];
 
   constructor(private camera: Camera, private loaderService: LoaderService, private file: File, private crop: Crop,
               private toastService: ToastService, private actionSheetController: ActionSheetController, private webview: WebView,
@@ -93,10 +94,10 @@ export class PhotoService {
     const resPath = this.pathForImage(filePath);
 
     const newEntry: Photo = {
-      Id: 1,
       Name: name,
       Path: resPath,
-      Filepath: filePath
+      Filepath: filePath,
+      IsSelect: false
     };
     this.arrPhotos.unshift(newEntry);
     localStorage.setItem('photos', JSON.stringify(this.arrPhotos));
@@ -112,20 +113,39 @@ export class PhotoService {
     }
   }
 
-  deleteImage(imgEntry: Photo, position: number) {
-    this.arrPhotos.splice(position, 1);
-    localStorage.setItem('photos', JSON.stringify(this.arrPhotos));
-    const correctPath = imgEntry.Filepath.substr(0, imgEntry.Filepath.lastIndexOf('/') + 1);
+  selectMultipleImage(item: Photo) {
+    const index = this.arrSelected.indexOf(item);
+    if (index !== -1) {
+      item.IsSelect = false;
+      this.arrSelected.splice(index, 1);
+    } else {
+      item.IsSelect = true;
+      this.arrSelected.push(item);
+    }
+  }
 
-    this.file.removeFile(correctPath, imgEntry.Name).then(() => {
-      this.toastService.presentToast('Image deleted successfully.');
+  deleteImage() {
+    this.arrSelected.forEach(itemDelete => {
+      this.arrPhotos.forEach(item => {
+        if (itemDelete.Name === item.Name) {
+          const index = this.arrPhotos.indexOf(item);
+          this.arrPhotos.splice(index, 1);
+          const correctPath = item.Filepath.substr(0, item.Filepath.lastIndexOf('/') + 1);
+
+          this.file.removeFile(correctPath, item.Name).then(() => {
+            this.toastService.presentToast('Image deleted successfully.');
+          });
+        }
+      });
     });
+    this.arrSelected = [];
+    localStorage.setItem('photos', JSON.stringify(this.arrPhotos));
   }
 }
 
 class Photo {
-  Id: number;
   Name: string;
   Path: string;
   Filepath: string;
+  IsSelect: boolean;
 }

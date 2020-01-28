@@ -1,14 +1,10 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-
     <ion-title>Home</ion-title>
 
-    <ion-buttons slot="end">
-      <ion-icon name="camera" (click)="photoService.selectImage()"></ion-icon>
-    </ion-buttons>
+    <ion-icon slot="end" name="camera" (click)="photoService.selectImage()"></ion-icon>
+    <ion-icon slot="end" name="trash" (click)="photoService.deleteImage()" *ngIf="photoService.arrSelected.length != 0">
+    </ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -28,35 +24,23 @@
     <!-- Responsive Layout with Ion Grid-->
     <ion-grid *ngSwitchCase="'regular'">
       <ion-row>
-        <ion-col *ngFor="let objImg of photoService.arrPhotos; index as pos">
-          <ion-thumbnail>
-            <ion-img [src]="objImg.Path"></ion-img>
-          </ion-thumbnail>
+        <ion-col *ngFor="let objImg of photoService.arrPhotos">
+          <div class="photo-thumbnail">
+            <ion-thumbnail [ngClass]="{'overlay-image': objImg.IsSelect}"
+              (click)="photoService.selectMultipleImage(objImg)">
+              <ion-img [src]="objImg.Path"></ion-img>
+            </ion-thumbnail>
+            <ion-icon name="checkmark" *ngIf="objImg.IsSelect"></ion-icon>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
 
     <!-- More Pinterest floating gallery style -->
     <div class="images" *ngSwitchCase="'pinterest'">
-      <div class="one-image" *ngFor="let objImg of photoService.arrPhotos; index as pos">
+      <div class="one-image" *ngFor="let objImg of photoService.arrPhotos">
         <ion-img [src]="objImg.Path"></ion-img>
       </div>
     </div>
   </div>
-
-  <!-- <ion-list>
-    <ion-item *ngFor="let objImg of photoService.arrPhotos; index as pos" class="ion-text-wrap">
-      <ion-thumbnail slot="start">
-        <ion-img [src]="objImg.Path"></ion-img>
-      </ion-thumbnail>
-
-      <ion-label>
-        {{objImg.Name}}
-      </ion-label>
-
-      <ion-button slot="end" fill="clear" (click)="photoService.deleteImage(objImg, pos)">
-        <ion-icon slot="icon-only" name="trash"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list> -->
 </ion-content>
