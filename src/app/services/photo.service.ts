@@ -142,10 +142,3 @@ export class PhotoService {
     localStorage.setItem('photos', JSON.stringify(this.arrPhotos));
   }
 }
-
-class Photo {
-  Name: string;
-  Path: string;
-  Filepath: string;
-  IsSelect: boolean;
-}
